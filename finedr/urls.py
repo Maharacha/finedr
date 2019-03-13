@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
+from rest_framework.authtoken import views as authviews
 from onsite.urls import router
 
 urlpatterns = [
@@ -28,6 +29,10 @@ urlpatterns = [
     path(
         'onsite/api-auth/',
         include('rest_framework.urls', namespace='rest_framework')
+    ),
+    path(
+        'onsite/api-token-auth/',
+        authviews.obtain_auth_token
     )
 ]
 
