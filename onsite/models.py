@@ -49,7 +49,8 @@ class FineTip(models.Model):
     image = models.ImageField(
         verbose_name=_("preview image"),
         upload_to='%Y/%m/%d/',
-        unique=True
+        unique=True,
+        null=True
     )
     license_plate = models.CharField(
         verbose_name=_("license plate"),
@@ -73,6 +74,11 @@ class FineTip(models.Model):
     pub_date = models.DateTimeField(
         verbose_name=_("date found"),
         default=timezone.now
+    )
+
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
     )
     
     def __str__(self):

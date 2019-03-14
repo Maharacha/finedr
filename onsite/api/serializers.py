@@ -2,7 +2,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 from rest_framework.renderers import JSONRenderer
-
+from drf_extra_fields.fields import Base64ImageField
 from onsite.models import (ParkingLot, FineTip)
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -28,24 +28,41 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'name')
 
 
-class ParkingLotSerializer(serializers.HyperlinkedModelSerializer):
+class ParkingLotSerializer(serializers.HyperlinkedModelSerializer):    
     class Meta:
         model = ParkingLot
-        fields = '__all__'
+        fields = (
+            'url', 'street_name', 'coordinates', 'created_by', 'pub_date')
 
 
 class FineTipSerializer(serializers.HyperlinkedModelSerializer):
     #created_by_url = serializers.SerializerMethodField()
     #created_by_url = UserSerializer()
 
+    image = Base64ImageField()
+
+    parking_lot_name = serializers.SlugRelatedField(
+        source='parking_lot',
+        many=False,
+        queryset=ParkingLot.objects.all(),
+        allow_null=False,
+        read_only=False,
+        slug_field='street_name'
+    )
+
+    created_by_name = serializers.SlugRelatedField(
+        source='created_by',
+        many=False,
+        queryset=User.objects.all(),
+        allow_null=False,
+        read_only=False,
+        slug_field='username'
+    )
+    
     class Meta:
         model = FineTip
-        #fields = ('url', 'license_plate', 'reason', 'street_name', 'coordinates', 'pub_date')        
-        fields = '__all__'
-        
-    #def get_created_by_url(self, validated_data):
-      #  print(validated_data.created_by)
-        #created_by_id = User.objects.get(username=validated_data.created_by).id
-        #print(created_by_url_id)
-        #created_by_url = 
-        #return created_by_url
+        fields = ('id', 'url', 'image', 'license_plate', 'reason', 'parking_lot_name', 'coordinates', 'pub_date', 'created_by_name')        
+
+    #def create(self, validated_data):
+    #    image = validated_data.pop('image')
+    #    return FineTip.objects.create(image=image)
