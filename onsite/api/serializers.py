@@ -4,6 +4,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.renderers import JSONRenderer
 from drf_extra_fields.fields import Base64ImageField
 from onsite.models import (ParkingLot, FineTip)
+from rest_framework.response import Response
+from rest_framework import status
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -62,6 +64,15 @@ class FineTipSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = FineTip
         fields = ('id', 'url', 'image', 'license_plate', 'reason', 'parking_lot_name', 'coordinates', 'pub_date', 'created_by_name')        
+
+
+class GetUserNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username']
+        extra_kwargs = {'username': {'read_only': True}}
+
+    #username = serializers.CharField()
 
     #def create(self, validated_data):
     #    image = validated_data.pop('image')

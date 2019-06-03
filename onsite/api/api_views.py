@@ -1,7 +1,10 @@
 from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
+from rest_framework import viewsets, views, generics
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
+from rest_framework import status
 
-from onsite.api.serializers import UserSerializer, GroupSerializer, ParkingLotSerializer, FineTipSerializer
+from onsite.api.serializers import UserSerializer, GroupSerializer, ParkingLotSerializer, FineTipSerializer, GetUserNameSerializer
 from onsite.models import (ParkingLot, FineTip)
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -36,8 +39,20 @@ class ParkingLotViewSet(viewsets.ModelViewSet):
 class FineTipViewSet(viewsets.ModelViewSet):
     queryset = FineTip.objects.all()
     serializer_class = FineTipSerializer
-    
-    
+
+
+class GetUserNameViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get']
+    queryset = User.objects.all()
+    serializer_class = GetUserNameSerializer
+    def get_queryset(self):
+        user = self.request.user
+        queryset = self.queryset.filter(
+            username=user.username
+        )
+        return queryset
+
+
 # class LoginView(CreateAPIView):            
 #     permission_classes = ()
 #     serializer_class = UserSerializer
