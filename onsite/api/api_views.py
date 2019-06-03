@@ -4,7 +4,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework import status
 
-from onsite.api.serializers import UserSerializer, GroupSerializer, ParkingLotSerializer, FineTipSerializer, GetUserNameSerializer
+from onsite.api.serializers import UserSerializer, GroupSerializer, ParkingLotSerializer, FineTipSerializer, GetUserNameSerializer, GetFineTipsUserSerializer
 from onsite.models import (ParkingLot, FineTip)
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -49,6 +49,18 @@ class GetUserNameViewSet(viewsets.ModelViewSet):
         user = self.request.user
         queryset = self.queryset.filter(
             username=user.username
+        )
+        return queryset
+
+
+class GetFineTipsUserViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get']
+    queryset = FineTip.objects.all()
+    serializer_class = GetFineTipsUserSerializer
+    def get_queryset(self):
+        user = self.request.user
+        queryset = self.queryset.filter(
+            created_by_id=user.id
         )
         return queryset
 

@@ -72,8 +72,8 @@ class GetUserNameSerializer(serializers.ModelSerializer):
         fields = ['username']
         extra_kwargs = {'username': {'read_only': True}}
 
-    #username = serializers.CharField()
 
-    #def create(self, validated_data):
-    #    image = validated_data.pop('image')
-    #    return FineTip.objects.create(image=image)
+class GetFineTipsUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FineTip
+        fields = '__all__'
