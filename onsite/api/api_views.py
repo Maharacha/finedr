@@ -55,13 +55,13 @@ class GetUserNameViewSet(viewsets.ModelViewSet):
 
 class GetFineTipsUserViewSet(viewsets.ModelViewSet):
     http_method_names = ['get']
-    queryset = FineTip.objects.all()
+    queryset = FineTip.objects.all().order_by('-pub_date')
     serializer_class = GetFineTipsUserSerializer
     def get_queryset(self):
         user = self.request.user
         queryset = self.queryset.filter(
             created_by_id=user.id
-        )
+        ).order_by('-pub_date')
         return queryset
 
 
