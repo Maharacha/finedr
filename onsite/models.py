@@ -44,7 +44,7 @@ class FineTip(models.Model):
     class Meta:
         verbose_name = pgettext_lazy('singular', 'fine tip')
         verbose_name_plural = pgettext_lazy('plural', 'fine tips')
-        ordering = ('pub_date', )
+        ordering = ('-pub_date', )
         
     image = models.ImageField(
         verbose_name=_("preview image"),
