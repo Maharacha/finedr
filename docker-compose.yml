@@ -1,0 +1,10 @@
+version: '2.0'
+services:
+  finedr:
+    build:
+      context: .
+    ports:
+    - "5000:5000"
+    restart: unless-stopped
+    container_name: finedr
+    image: finedr
