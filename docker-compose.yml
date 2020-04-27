@@ -8,7 +8,5 @@ services:
     restart: unless-stopped
     container_name: finedr
     image: web-finedr
-    depends_on:
-      - internal-nginx
     networks: 
       - nginx-net
