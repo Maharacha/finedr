@@ -1,12 +1,11 @@
 version: '3'
 services:
-  internal-finedr:
+  finedr:
     build:
-      context: ./finedr
+      context: .
     ports:
-    - "5000:5000"
+    - "8080:8080"
     restart: unless-stopped
     container_name: finedr
-    image: web-finedr
-    networks: 
-      - nginx-net
+    volumes:
+      - .:/app
