@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cp $SNAP/finedr.db.sqlite3 $SNAP_DATA
+cp -r $SNAP/media $SNAP_DATA
