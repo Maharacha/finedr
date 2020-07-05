@@ -1,0 +1,16 @@
+name: finedr-docker
+summary: <Fill in summary here>
+maintainer: Joakim Nyman <Joakim.Nyman@joakim-ThinkPad>
+description: |
+  Django backend charm for finedr
+series: ["xenial", "bionic", "trusty"]
+tags:
+  # Replace "misc" with one or more whitelisted tags from this list:
+  # https://jujucharms.com/docs/stable/authors-charm-metadata
+  - finedr
+subordinate: false
+resources:
+  finedr:
+    type: file
+    filename: finedr.tar.gz
+    description: Finedr repository

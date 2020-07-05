@@ -1,0 +1,4 @@
+includes: 
+  - 'layer:basic'
+  - 'layer:docker'
+repo: https://github.com/Maharacha/finedr.git
